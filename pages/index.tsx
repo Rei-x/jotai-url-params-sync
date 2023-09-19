@@ -40,7 +40,6 @@ export default function Home() {
       <label>
         <input
           type="checkbox"
-          name="faktury"
           checked={documents.includes("faktury-zakupowe")}
           onChange={() => {
             switchDocument("faktury-zakupowe");
@@ -51,7 +50,6 @@ export default function Home() {
       <label>
         <input
           type="checkbox"
-          name="faktury-sprzedazowe"
           checked={documents.includes("faktury-sprzedazowe")}
           onChange={() => {
             switchDocument("faktury-sprzedazowe");
@@ -62,7 +60,6 @@ export default function Home() {
       <label>
         <input
           type="checkbox"
-          name="ewidencje-godzin"
           checked={documents.includes("ewidencja-godzin")}
           onChange={(e) => {
             switchDocument("ewidencja-godzin");
