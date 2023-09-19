@@ -24,10 +24,20 @@ export default function Home() {
   };
 
   return (
-    <main className="container">
-      <pre>{JSON.stringify(documents)}</pre>
+    <main
+      className="container"
+      style={{
+        marginTop: "2rem",
+      }}
+    >
+      <pre
+        style={{
+          padding: "1rem",
+        }}
+      >
+        {JSON.stringify(documents)}
+      </pre>
       <label>
-        Faktury zakupowe
         <input
           type="checkbox"
           name="faktury"
@@ -36,9 +46,9 @@ export default function Home() {
             switchDocument("faktury-zakupowe");
           }}
         />
+        Faktury zakupowe
       </label>
       <label>
-        Faktury sprzedażowe
         <input
           type="checkbox"
           name="faktury-sprzedazowe"
@@ -47,9 +57,9 @@ export default function Home() {
             switchDocument("faktury-sprzedazowe");
           }}
         />
+        Faktury sprzedażowe
       </label>
       <label>
-        Ewidencje godzin
         <input
           type="checkbox"
           name="ewidencje-godzin"
@@ -58,6 +68,7 @@ export default function Home() {
             switchDocument("ewidencja-godzin");
           }}
         />
+        Ewidencje godzin
       </label>
     </main>
   );
