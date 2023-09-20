@@ -1,72 +1,51 @@
-import { atomWithHash } from "jotai-location";
-import { useAtom } from "jotai";
 import React from "react";
 import "@picocss/pico/css/pico.min.css";
+import Link from "next/link";
+import { Documents, documentsAtom } from "./dokumenty";
+import { ExtractAtomValue } from "jotai";
 
-type Documents =
-  | "faktury-zakupowe"
-  | "faktury-sprzedazowe"
-  | "ewidencja-godzin";
-
-const documentsAtom = atomWithHash<Documents[]>("filter", []);
+const DocumentsLink = ({
+  document,
+  children,
+}: {
+  document: Documents;
+  children: React.ReactNode;
+}) => {
+  return (
+    <Link
+      href={{
+        pathname: "/dokumenty",
+        hash: new URLSearchParams({
+          filter: JSON.stringify([document] satisfies ExtractAtomValue<
+            typeof documentsAtom
+          >),
+        }).toString(),
+      }}
+    >
+      {children}
+    </Link>
+  );
+};
 
 export default function Home() {
-  const [documents, setDocuments] = useAtom(documentsAtom);
-
-  const switchDocument = (document: Documents) => {
-    setDocuments((docs) => {
-      if (docs.includes(document)) {
-        return docs.filter((doc) => doc !== document);
-      } else {
-        return [...docs, document];
-      }
-    });
-  };
-
   return (
     <main
       className="container"
       style={{
         marginTop: "2rem",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
-      <pre
-        style={{
-          padding: "1rem",
-        }}
-      >
-        {JSON.stringify(documents)}
-      </pre>
-      <label>
-        <input
-          type="checkbox"
-          checked={documents.includes("faktury-zakupowe")}
-          onChange={() => {
-            switchDocument("faktury-zakupowe");
-          }}
-        />
+      <DocumentsLink document="faktury-zakupowe">
         Faktury zakupowe
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={documents.includes("faktury-sprzedazowe")}
-          onChange={() => {
-            switchDocument("faktury-sprzedazowe");
-          }}
-        />
+      </DocumentsLink>
+      <DocumentsLink document="faktury-sprzedazowe">
         Faktury sprzedażowe
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={documents.includes("ewidencja-godzin")}
-          onChange={(e) => {
-            switchDocument("ewidencja-godzin");
-          }}
-        />
-        Ewidencje godzin
-      </label>
+      </DocumentsLink>
+      <DocumentsLink document="ewidencja-godzin">
+        Ewidencja godzin
+      </DocumentsLink>
     </main>
   );
 }
